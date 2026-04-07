@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCalendar } from '@/hooks/useCalendar';
 import { getMonthData } from '@/utils/dateUtils';
 import HeroImage from './HeroImage';
@@ -10,6 +10,27 @@ import CalendarGrid from './CalendarGrid';
 import NotesPanel from './NotesPanel';
 import { ThemeMode } from '@/types/calendar';
 
+const flipVariants = {
+  enter: (d: number) => ({
+    rotateX: d > 0 ? -90 : 90,
+    opacity: 0,
+    scale: 0.95,
+    transformOrigin: "top center"
+  }),
+  center: {
+    rotateX: 0,
+    opacity: 1,
+    scale: 1,
+    transformOrigin: "top center"
+  },
+  exit: (d: number) => ({
+    rotateX: d > 0 ? 90 : -90,
+    opacity: 0,
+    scale: 0.95,
+    transformOrigin: "top center"
+  })
+};
+
 const CalendarContainer: React.FC = () => {
   const {
     currentYear,
@@ -17,6 +38,7 @@ const CalendarContainer: React.FC = () => {
     selectedRange,
     hoveredDate,
     selectionStep,
+    direction,
     goToPrevMonth,
     goToNextMonth,
     goToToday,
@@ -59,8 +81,12 @@ const CalendarContainer: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
+      style={{
+        '--theme-h': monthData.themeHue,
+        '--theme-s': monthData.themeSat,
+      } as React.CSSProperties}
     >
-      <div className="relative z-10 flex justify-center gap-[6px] -mb-3 pointer-events-none">
+      <div className="relative z-20 flex justify-center gap-[6px] -mb-3 pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
@@ -69,15 +95,18 @@ const CalendarContainer: React.FC = () => {
         ))}
       </div>
 
-      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-400/30 dark:shadow-black/50 overflow-hidden border border-gray-100 dark:border-gray-800">
+      <div 
+        className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-400/30 dark:shadow-black/50 border border-gray-100 dark:border-gray-800"
+        style={{ perspective: 1200 }}
+      >
         {/* Dark mode / theme toggle */}
         <button
           onClick={toggleTheme}
-          className="absolute top-4 left-4 z-30 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 group"
+          className="absolute top-4 left-4 z-40 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 group"
           aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
           {theme === 'light' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-gray-600 group-hover:text-sky-500 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-gray-600 group-hover:text-primary-500 transition-colors">
               <path fillRule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clipRule="evenodd" />
             </svg>
           ) : (
@@ -87,72 +116,80 @@ const CalendarContainer: React.FC = () => {
           )}
         </button>
 
-        <div className="flex flex-col lg:flex-row">
-          {/* Left: Hero Image */}
-          <div className="lg:w-[45%] lg:min-h-[520px]">
-            <HeroImage
-              year={currentYear}
-              month={currentMonth}
-              src={monthData.heroImage}
-              alt={monthData.heroAlt}
-            />
-          </div>
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
+          <motion.div
+            key={`${currentYear}-${currentMonth}`}
+            custom={direction}
+            variants={flipVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, type: 'spring', bounce: 0, stiffness: 200, damping: 25 }}
+            className="flex flex-col lg:flex-row w-full bg-white dark:bg-gray-900 overflow-hidden rounded-2xl"
+            style={{ backfaceVisibility: 'hidden' }}
+          >
+            {/* Left: Hero Image */}
+            <div className="lg:w-[45%] lg:min-h-[520px]">
+              <HeroImage
+                year={currentYear}
+                month={currentMonth}
+                src={monthData.heroImage}
+                alt={monthData.heroAlt}
+              />
+            </div>
 
-          {/* Right: Calendar + Notes */}
-          <div className="flex-1 p-5 md:p-7 lg:p-8 flex flex-col">
-            {/* Calendar header (nav) */}
-            <CalendarHeader
-              year={currentYear}
-              month={currentMonth}
-              onPrev={goToPrevMonth}
-              onNext={goToNextMonth}
-              onToday={goToToday}
-            />
+            {/* Right: Calendar + Notes */}
+            <div className="flex-1 p-5 md:p-7 lg:p-8 flex flex-col relative z-30">
+              <CalendarHeader
+                year={currentYear}
+                month={currentMonth}
+                onPrev={goToPrevMonth}
+                onNext={goToNextMonth}
+                onToday={goToToday}
+              />
 
-            {/* Selection summary strip */}
-            {selectionLabel && (
-              <motion.div
-                className="flex items-center justify-between mb-3 px-3 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-900/30 border border-sky-100 dark:border-sky-800"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="text-xs font-medium text-sky-700 dark:text-sky-300">
-                  {selectionLabel}
-                </span>
-                {selectionStep === 2 && (
-                  <button
-                    onClick={clearSelection}
-                    className="text-[10px] font-semibold text-sky-500 hover:text-sky-700 dark:hover:text-sky-300 uppercase tracking-wider transition-colors"
-                  >
-                    Clear
-                  </button>
-                )}
-              </motion.div>
-            )}
+              {selectionLabel && (
+                <motion.div
+                  className="flex items-center justify-between mb-3 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <span className="text-xs font-medium text-primary-700 dark:text-primary-300">
+                    {selectionLabel}
+                  </span>
+                  {selectionStep === 2 && (
+                    <button
+                      onClick={clearSelection}
+                      className="text-[10px] font-semibold text-primary-500 hover:text-primary-700 dark:hover:text-primary-300 uppercase tracking-wider transition-colors"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </motion.div>
+              )}
 
-            {/* Calendar grid */}
-            <CalendarGrid
-              year={currentYear}
-              month={currentMonth}
-              selectedRange={selectedRange}
-              hoveredDate={hoveredDate}
-              selectionStep={selectionStep}
-              onDateClick={handleDateClick}
-              onDateHover={handleDateHover}
-            />
+              <CalendarGrid
+                year={currentYear}
+                month={currentMonth}
+                selectedRange={selectedRange}
+                hoveredDate={hoveredDate}
+                selectionStep={selectionStep}
+                onDateClick={handleDateClick}
+                onDateHover={handleDateHover}
+              />
 
-            {/* Notes panel */}
-            <NotesPanel
-              year={currentYear}
-              month={currentMonth}
-              selectedRange={selectedRange}
-            />
-          </div>
-        </div>
+              <NotesPanel
+                year={currentYear}
+                month={currentMonth}
+                selectedRange={selectedRange}
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
         {/* Bottom accent strip */}
-        <div className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600" />
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-blue-600 rounded-b-2xl z-50 pointer-events-none" />
       </div>
 
       <div className="flex justify-center -mt-[1px]">

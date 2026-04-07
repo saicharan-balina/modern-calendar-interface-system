@@ -36,7 +36,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
               key={label}
               className={`text-center text-xs font-bold uppercase tracking-wider py-2 ${
                 isWeekendCol
-                  ? 'text-sky-500 dark:text-sky-400'
+                  ? 'text-primary-500 dark:text-primary-400'
                   : 'text-gray-500 dark:text-gray-400'
               }`}
             >

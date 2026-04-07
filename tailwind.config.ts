@@ -15,6 +15,18 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        primary: {
+          50: 'hsl(var(--theme-h), var(--theme-s), 95%)',
+          100: 'hsl(var(--theme-h), var(--theme-s), 90%)',
+          200: 'hsl(var(--theme-h), var(--theme-s), 80%)',
+          300: 'hsl(var(--theme-h), var(--theme-s), 70%)',
+          400: 'hsl(var(--theme-h), var(--theme-s), 60%)',
+          500: 'hsl(var(--theme-h), var(--theme-s), 50%)',
+          600: 'hsl(var(--theme-h), var(--theme-s), 40%)',
+          700: 'hsl(var(--theme-h), var(--theme-s), 30%)',
+          800: 'hsl(var(--theme-h), var(--theme-s), 20%)',
+          900: 'hsl(var(--theme-h), var(--theme-s), 10%)',
+        },
       },
     },
   },

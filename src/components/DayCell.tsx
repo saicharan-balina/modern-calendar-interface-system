@@ -47,19 +47,19 @@ const DayCell: React.FC<DayCellProps> = memo(function DayCell({
     'relative flex items-center justify-center h-10 w-full cursor-pointer select-none text-sm font-medium transition-all duration-200 rounded-md ';
 
   if (isStart || isEnd) {
-    cellClasses += 'bg-sky-500 text-white shadow-lg shadow-sky-500/30 z-10 ';
+    cellClasses += 'bg-primary-500 text-white shadow-lg shadow-primary-500/30 z-10 ';
   } else if (inRange) {
-    cellClasses += 'bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-200 ';
+    cellClasses += 'bg-primary-100 dark:bg-primary-900/40 text-primary-800 dark:text-primary-200 ';
   } else if (inHover) {
-    cellClasses += 'bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 ';
+    cellClasses += 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 ';
   } else if (isHoveredEnd) {
     cellClasses +=
-      'bg-sky-200 dark:bg-sky-800/50 text-sky-800 dark:text-sky-200 ring-2 ring-sky-400 ring-inset ';
+      'bg-primary-200 dark:bg-primary-800/50 text-primary-800 dark:text-primary-200 ring-2 ring-primary-400 ring-inset ';
   } else if (today) {
     cellClasses +=
-      'ring-2 ring-sky-400 ring-inset text-sky-600 dark:text-sky-400 font-bold ';
+      'ring-2 ring-primary-400 ring-inset text-primary-600 dark:text-primary-400 font-bold ';
   } else if (weekend || holiday) {
-    cellClasses += 'text-sky-500 dark:text-sky-400 ';
+    cellClasses += 'text-primary-500 dark:text-primary-400 ';
   } else {
     cellClasses +=
       'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 ';
@@ -85,7 +85,7 @@ const DayCell: React.FC<DayCellProps> = memo(function DayCell({
     >
       {day}
       {today && !isStart && !isEnd && (
-        <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-sky-500" />
+        <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500" />
       )}
       {holiday && !today && !isStart && !isEnd && (
         <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-rose-400" />

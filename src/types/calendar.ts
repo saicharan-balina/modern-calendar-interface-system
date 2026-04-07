@@ -8,6 +8,8 @@ export interface MonthData {
   year: number;
   heroImage: string;
   heroAlt: string;
+  themeHue: string;
+  themeSat: string;
 }
 
 export interface CalendarNote {

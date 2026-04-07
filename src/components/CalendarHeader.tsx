@@ -55,14 +55,14 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-sky-500">{year}</span>{' '}
+            <span className="text-primary-500">{year}</span>{' '}
             <span className="uppercase">{getMonthName(month)}</span>
           </motion.h2>
         </AnimatePresence>
         <motion.button
           type="button"
           onClick={onToday}
-          className="text-[10px] font-semibold uppercase tracking-wider bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 px-2 py-0.5 rounded-full hover:bg-sky-100 dark:hover:bg-sky-800/50 transition-colors"
+          className="text-[10px] font-semibold uppercase tracking-wider bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-2 py-0.5 rounded-full hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Go to today"

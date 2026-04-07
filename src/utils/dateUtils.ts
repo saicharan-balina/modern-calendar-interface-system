@@ -144,13 +144,31 @@ export function monthKey(year: number, month: number): string {
   return `${year}-${month}`;
 }
 
+const MONTH_THEMES: { h: string; s: string }[] = [
+  { h: '199', s: '89%' }, // Jan: Sky Blue
+  { h: '290', s: '70%' }, // Feb: Pink/Purple
+  { h: '330', s: '80%' }, // Mar: Cherry Pink
+  { h: '350', s: '80%' }, // Apr: Rose Red
+  { h: '140', s: '60%' }, // May: Green
+  { h: '180', s: '90%' }, // Jun: Teal
+  { h: '30', s: '100%' }, // Jul: Orange
+  { h: '45', s: '100%' }, // Aug: Yellow/Gold
+  { h: '35', s: '90%' },  // Sep: Amber
+  { h: '20', s: '70%' },  // Oct: Slate Orange
+  { h: '30', s: '40%' },  // Nov: Bronze
+  { h: '200', s: '40%' }, // Dec: Slate Blue
+];
+
 export function getMonthData(year: number, month: number): MonthData {
   const img = MONTH_IMAGES[month];
+  const theme = MONTH_THEMES[month];
   return {
     month,
     year,
     heroImage: img.src,
     heroAlt: img.alt,
+    themeHue: theme.h,
+    themeSat: theme.s,
   };
 }
 

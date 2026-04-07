@@ -16,8 +16,10 @@ export function useCalendar(initialYear?: number, initialMonth?: number) {
   const [selectionStep, setSelectionStep] = useState<0 | 1 | 2>(0);
 
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
+  const [direction, setDirection] = useState<number>(0);
 
   const goToPrevMonth = useCallback(() => {
+    setDirection(-1);
     setCurrentMonth((m) => {
       if (m === 0) {
         setCurrentYear((y) => y - 1);
@@ -28,6 +30,7 @@ export function useCalendar(initialYear?: number, initialMonth?: number) {
   }, []);
 
   const goToNextMonth = useCallback(() => {
+    setDirection(1);
     setCurrentMonth((m) => {
       if (m === 11) {
         setCurrentYear((y) => y + 1);
@@ -82,6 +85,7 @@ export function useCalendar(initialYear?: number, initialMonth?: number) {
     selectedRange,
     hoveredDate,
     selectionStep,
+    direction,
     goToPrevMonth,
     goToNextMonth,
     goToToday,

@@ -94,7 +94,7 @@ const NotesPanel: React.FC<NotesPanelProps> = ({ year, month, selectedRange }) =
           className="w-full resize-none rounded-lg border border-gray-200 dark:border-gray-600 
             bg-white dark:bg-gray-800 px-4 text-sm text-gray-700 dark:text-gray-200
             placeholder-gray-400 dark:placeholder-gray-500
-            focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-400
+            focus:outline-none focus:ring-2 focus:ring-primary-400/50 focus:border-primary-400
             transition-all duration-200 leading-[28px] pt-2 pb-2"
           style={{
             backgroundImage:
