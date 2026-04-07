@@ -20,25 +20,23 @@ export function useCalendar(initialYear?: number, initialMonth?: number) {
 
   const goToPrevMonth = useCallback(() => {
     setDirection(-1);
-    setCurrentMonth((m) => {
-      if (m === 0) {
-        setCurrentYear((y) => y - 1);
-        return 11;
-      }
-      return m - 1;
-    });
-  }, []);
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear((y) => y - 1);
+    } else {
+      setCurrentMonth((m) => m - 1);
+    }
+  }, [currentMonth]);
 
   const goToNextMonth = useCallback(() => {
     setDirection(1);
-    setCurrentMonth((m) => {
-      if (m === 11) {
-        setCurrentYear((y) => y + 1);
-        return 0;
-      }
-      return m + 1;
-    });
-  }, []);
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear((y) => y + 1);
+    } else {
+      setCurrentMonth((m) => m + 1);
+    }
+  }, [currentMonth]);
 
   const goToToday = useCallback(() => {
     const today = new Date();
