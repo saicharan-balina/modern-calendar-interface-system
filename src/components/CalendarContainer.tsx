@@ -12,21 +12,24 @@ import { ThemeMode } from '@/types/calendar';
 
 const flipVariants = {
   enter: (d: number) => ({
-    rotateX: d > 0 ? -90 : 90,
+    y: d > 0 ? 40 : -40,
+    rotateX: d > 0 ? -15 : 15,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.97,
     transformOrigin: "top center"
   }),
   center: {
+    y: 0,
     rotateX: 0,
     opacity: 1,
     scale: 1,
     transformOrigin: "top center"
   },
   exit: (d: number) => ({
-    rotateX: d > 0 ? 90 : -90,
+    y: d > 0 ? -40 : 40,
+    rotateX: d > 0 ? 15 : -15,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.97,
     transformOrigin: "top center"
   })
 };
