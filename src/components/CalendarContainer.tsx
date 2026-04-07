@@ -12,25 +12,19 @@ import { ThemeMode } from '@/types/calendar';
 
 const flipVariants = {
   enter: (d: number) => ({
-    y: d > 0 ? 40 : -40,
-    rotateX: d > 0 ? -15 : 15,
+    y: d > 0 ? 15 : -15,
     opacity: 0,
-    scale: 0.97,
-    transformOrigin: "top center"
+    filter: 'blur(8px)',
   }),
   center: {
     y: 0,
-    rotateX: 0,
     opacity: 1,
-    scale: 1,
-    transformOrigin: "top center"
+    filter: 'blur(0px)',
   },
   exit: (d: number) => ({
-    y: d > 0 ? -40 : 40,
-    rotateX: d > 0 ? 15 : -15,
+    y: d > 0 ? -15 : 15,
     opacity: 0,
-    scale: 0.97,
-    transformOrigin: "top center"
+    filter: 'blur(8px)',
   })
 };
 
@@ -52,11 +46,9 @@ const CalendarContainer: React.FC = () => {
 
   const monthData = getMonthData(currentYear, currentMonth);
 
-  // Dark mode
   const [theme, setTheme] = useState<ThemeMode>('light');
 
   useEffect(() => {
-    // Persist theme preference
     const stored = localStorage.getItem('calendar-theme') as ThemeMode | null;
     if (stored) setTheme(stored);
   }, []);
@@ -68,7 +60,6 @@ const CalendarContainer: React.FC = () => {
 
   const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
 
-  // Selection summary text
   let selectionLabel = '';
   if (selectedRange.start && selectedRange.end) {
     const fmt = (d: Date) =>
@@ -100,9 +91,7 @@ const CalendarContainer: React.FC = () => {
 
       <div 
         className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-400/30 dark:shadow-black/50 border border-gray-100 dark:border-gray-800"
-        style={{ perspective: 1200 }}
       >
-        {/* Dark mode / theme toggle */}
         <button
           onClick={toggleTheme}
           className="absolute top-4 left-4 z-40 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 group"
@@ -127,9 +116,8 @@ const CalendarContainer: React.FC = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.5, type: 'spring', bounce: 0, stiffness: 200, damping: 25 }}
+            transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
             className="flex flex-col lg:flex-row w-full bg-white dark:bg-gray-900 overflow-hidden rounded-2xl"
-            style={{ backfaceVisibility: 'hidden' }}
           >
             {/* Left: Hero Image */}
             <div className="lg:w-[45%] lg:min-h-[520px]">
