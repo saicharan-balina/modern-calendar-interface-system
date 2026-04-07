@@ -28,10 +28,24 @@ const NotesPanel: React.FC<NotesPanelProps> = ({ year, month, selectedRange }) =
   const [savedNotes, setSavedNotes] = useLocalStorage<string>(storageKey, '');
   const [draft, setDraft] = useState(savedNotes);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Track draft to flush on unmount
+  const draftRef = useRef(draft);
+  draftRef.current = draft;
 
   useEffect(() => {
     setDraft(savedNotes);
   }, [storageKey, savedNotes]);
+
+  // Flush to localStorage immediately if the component unmounts (e.g. user flips page quickly)
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(storageKey, JSON.stringify(draftRef.current));
+      }
+    };
+  }, [storageKey]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {

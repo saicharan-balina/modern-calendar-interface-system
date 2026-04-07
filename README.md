@@ -6,11 +6,12 @@ A polished, production-ready interactive React/Next.js component inspired by phy
 
 - **Wall Calendar Aesthetic:** Beautiful side-by-side or stacked layout utilizing month-specific imagery, drop-shadow depth, and a spiral-binding CSS effect.
 - **Date Range Selection:** Smooth three-step date range selection (Start → End → Reset) with hover previews, smart range normalization (handles reverse selection gracefully), and comprehensive edge-case handling.
-- **Integrated Notes System:** A lined-paper styled notes area. Notes auto-save seamlessly (debounced) and persist uniquely per month via localStorage.
-- **State-of-the-Art UX:** Smooth micro-interactions powered by Framer Motion, dynamic month transitions, and intelligent focus states.
-- **Fully Responsive:** Adapts flawlessly from desktop (two-column split) to tablet and mobile (vertical stack constraint).
-- **Dark Mode Support:** First-class dark mode styling perfectly matching modern design systems.
+- **Integrated Notes System:** A lined-paper styled notes area. Notes auto-save seamlessly (debounced) and persist uniquely per month via localStorage, complete with safe-unmount flushing to prevent data loss on quick navigation.
 - **Client-Side Persistence:** Zero backend requirement. All interactions (Theme, Notes) are dynamically persisted on the client instance utilizing robust custom hooks.
+
+## ✨ Premium Creative Features (Stand Out!)
+- **Chameleon UI Theming:** The calendar dynamically extracts a tailored HSL primary color profile from each month's specific hero image, injecting it into CSS variables. Every time the month changes, the entire UI (accents, selected dates, hovers, lines) morphs to structurally match the mood of the current image.
+- **Premium Motion Choreography:** Completely avoids the clumsy visual weight of strict 3D card flips. Instead, the month transitions utilize a sophisticated physics-based micro-slide layered with a dynamic Framer Motion background-blur filter, deeply mirroring high-end iOS and Linear.app spatial UX principles.
 
 ## 🛠 Tech Stack
 
