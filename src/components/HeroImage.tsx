@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { getMonthName } from '@/utils/dateUtils';
+
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 interface HeroImageProps {
   year: number;
@@ -13,6 +14,7 @@ interface HeroImageProps {
 }
 
 const HeroImage: React.FC<HeroImageProps> = ({ year, month, src, alt }) => {
+  const imgSrc = `${BASE_PATH}${src}`;
   return (
     <div className="relative w-full overflow-hidden rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none aspect-[2/1] lg:aspect-auto lg:h-full min-h-[220px]">
       <AnimatePresence mode="wait">
@@ -25,13 +27,13 @@ const HeroImage: React.FC<HeroImageProps> = ({ year, month, src, alt }) => {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
           {/* Background image */}
-          <Image
-            src={src}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imgSrc}
             alt={alt}
-            fill
-            priority
-            className="object-cover"
+            className="w-full h-full object-cover"
           />
+
 
           {/* Dark gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
