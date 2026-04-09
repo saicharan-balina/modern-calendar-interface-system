@@ -105,7 +105,7 @@ const CalendarContainer: React.FC = () => {
         {/* The Month Specialty Reveal Layer (Behind the pages) */}
         <div className="absolute inset-0 flex items-center justify-center p-8 pointer-events-none overflow-hidden rounded-2xl z-0">
           <p className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-center opacity-60 dark:opacity-60 text-primary-800 dark:text-primary-200 max-w-2xl leading-relaxed drop-shadow-sm">
-            "{monthData.specialty}"
+            &quot;{monthData.specialty}&quot;
           </p>
         </div>
         <button
