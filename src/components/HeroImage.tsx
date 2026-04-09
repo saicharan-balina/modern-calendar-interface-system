@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { getMonthName } from '@/utils/dateUtils';
 
 interface HeroImageProps {
@@ -24,11 +25,12 @@ const HeroImage: React.FC<HeroImageProps> = ({ year, month, src, alt }) => {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
           {/* Background image */}
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover"
-            loading="eager"
+            fill
+            priority
+            className="object-cover"
           />
 
           {/* Dark gradient overlay for text readability */}
