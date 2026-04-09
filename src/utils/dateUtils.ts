@@ -40,6 +40,22 @@ const MONTH_IMAGES: { src: string; alt: string }[] = [
   { src: '/images/december_hero.png', alt: 'Snowy winter scene in December' },
 ];
 
+// ─── Monthly Specialties (Revealed behind pages) 
+const MONTH_SPECIALTIES: string[] = [
+  "January: The month of crisp snow and new beginnings.",
+  "February: The month of romance and lingering frost.",
+  "March: The month of blooming cherry blossoms and rebirth.",
+  "April: The month of spring showers and fresh tulips.",
+  "May: The month of lush emerald valleys and warm breezes.",
+  "June: The month of tropical escapes and vibrant youth.",
+  "July: The month of sweet mangoes and golden sunsets.",
+  "August: The month of bright sunflowers and endless afternoons.",
+  "September: The month of falling leaves and autumn harvests.",
+  "October: The month of misty mornings and pumpkin patches.",
+  "November: The month of bronze twilight and quiet gratitude.",
+  "December: The month of cozy firesides and snowy celebrations."
+];
+
 // ─── Core Date Utilities ──────────────────────────────────────
 
 export function getDaysInMonth(year: number, month: number): number {
@@ -162,6 +178,7 @@ const MONTH_THEMES: { h: string; s: string }[] = [
 export function getMonthData(year: number, month: number): MonthData {
   const img = MONTH_IMAGES[month];
   const theme = MONTH_THEMES[month];
+  const specialty = MONTH_SPECIALTIES[month];
   return {
     month,
     year,
@@ -169,6 +186,7 @@ export function getMonthData(year: number, month: number): MonthData {
     heroAlt: img.alt,
     themeHue: theme.h,
     themeSat: theme.s,
+    specialty,
   };
 }
 

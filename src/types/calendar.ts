@@ -10,6 +10,7 @@ export interface MonthData {
   heroAlt: string;
   themeHue: string;
   themeSat: string;
+  specialty: string;
 }
 
 export interface CalendarNote {

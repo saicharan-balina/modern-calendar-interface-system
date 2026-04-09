@@ -10,21 +10,30 @@ import CalendarGrid from './CalendarGrid';
 import NotesPanel from './NotesPanel';
 import { ThemeMode } from '@/types/calendar';
 
-const flipVariants = {
+const clampFlipVariants = {
   enter: (d: number) => ({
-    y: d > 0 ? 15 : -15,
+    rotateX: d > 0 ? -90 : 90,
     opacity: 0,
-    filter: 'blur(8px)',
+    scale: 0.98,
+    y: -10,
+    filter: 'brightness(1.5) blur(5px)',
+    boxShadow: '0px 40px 60px -10px rgba(0,0,0,0.5)',
   }),
   center: {
-    y: 0,
+    rotateX: 0,
     opacity: 1,
-    filter: 'blur(0px)',
+    scale: 1,
+    y: 0,
+    filter: 'brightness(1) blur(0px)',
+    boxShadow: '0px 0px 0px 0px rgba(0,0,0,0)',
   },
   exit: (d: number) => ({
-    y: d > 0 ? -15 : 15,
+    rotateX: d > 0 ? 90 : -90,
     opacity: 0,
-    filter: 'blur(8px)',
+    scale: 0.98,
+    y: -10,
+    filter: 'brightness(0.5) blur(5px)',
+    boxShadow: '0px 50px 80px -15px rgba(0,0,0,0.8)',
   })
 };
 
@@ -89,9 +98,16 @@ const CalendarContainer: React.FC = () => {
         ))}
       </div>
 
-      <div 
+      <div
         className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-400/30 dark:shadow-black/50 border border-gray-100 dark:border-gray-800"
+        style={{ perspective: '2000px' }}
       >
+        {/* The Month Specialty Reveal Layer (Behind the pages) */}
+        <div className="absolute inset-0 flex items-center justify-center p-8 pointer-events-none overflow-hidden rounded-2xl z-0">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-center opacity-60 dark:opacity-60 text-primary-800 dark:text-primary-200 max-w-2xl leading-relaxed drop-shadow-sm">
+            "{monthData.specialty}"
+          </p>
+        </div>
         <button
           onClick={toggleTheme}
           className="absolute top-4 left-4 z-40 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 group"
@@ -112,11 +128,12 @@ const CalendarContainer: React.FC = () => {
           <motion.div
             key={`${currentYear}-${currentMonth}`}
             custom={direction}
-            variants={flipVariants}
+            variants={clampFlipVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+            transition={{ type: 'spring', stiffness: 100, damping: 20, mass: 1 }}
+            style={{ transformStyle: 'preserve-3d', transformOrigin: 'top center' }}
             className="flex flex-col lg:flex-row w-full bg-white dark:bg-gray-900 overflow-hidden rounded-2xl"
           >
             {/* Left: Hero Image */}

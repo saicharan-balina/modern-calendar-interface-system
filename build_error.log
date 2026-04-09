@@ -1,0 +1,13 @@
+
+> interactive-calendar@0.1.0 build
+> next build
+
+
+> Build error occurred
+Error: Specified basePath has to start with a /, found "C:/Program Files/Git/modern-calendar-interface-system"
+    at assignDefaults (C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\server\config.js:310:19)
+    at loadConfig (C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\server\config.js:782:32)
+    at async Span.traceAsyncFn (C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\trace\trace.js:154:20)
+    at async C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\build\index.js:374:28
+    at async Span.traceAsyncFn (C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\trace\trace.js:154:20)
+    at async build (C:\Users\Irfan\Documents\Interactive_calender_frontend_project\node_modules\next\dist\build\index.js:368:9)
