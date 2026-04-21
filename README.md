@@ -1,6 +1,6 @@
 # Interactive Wall Calendar Component
 
-A polished, production-ready interactive React/Next.js component inspired by physical wall calendar aesthetics. It features a hero imagery block, a fully functional date-range selector, and an integrated notes section, built with a strong focus on UX, responsiveness, and clean architecture.
+A polished, production-ready interactive React/Next.js component inspired by physical wall calendar aesthetics. It features a hero imagery block, a fully functional date-range selector, and an integrated notes section, built with a strong focus on UX, responsiveness, and clean  architecture.
 
 ## 🌟 Key Features
 
