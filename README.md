@@ -24,7 +24,7 @@ A polished, production-ready interactive React/Next.js component inspired by phy
 ## 🚀 Getting Started
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
+Make sure you have [Node.js](https://nodejs.org/) installed  (v18+ recommended).
 
 ### Installation
 
